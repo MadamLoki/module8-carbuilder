@@ -260,7 +260,7 @@ class Cli {
   }
 
   // method to find a vehicle to tow
-  findVehicleToTow(): void {
+  findVehicleToTow(truck: Truck): void {
     inquirer
       .prompt([
         {
@@ -283,14 +283,10 @@ class Cli {
           this.performActions();
         } else {
           // TO DO: tow the selected vehicle
-          console.log(`Towing vehicle ${answers.vehicleToTow}`);
-          this.towVehicles(selectedVehicle);
+          truck.tow(selectedVehicle);
           this.performActions();
         }
     });
-  }
-  towVehicles(selectedVehicle: any) {
-    throw new Error("Method not implemented.");
   }
 
   // method to perform actions on a vehicle
@@ -380,7 +376,7 @@ class Cli {
           for (let i = 0; i < this.vehicles.length; i++) {
             if (this.vehicles[i].vin === this.selectedVehicleVin) {
               if (this.vehicles[i] instanceof Truck) {
-                this.findVehicleToTow();
+                this.findVehicleToTow(this.vehicles[i] as Truck);
                 return;
               } else {
                 console.log('The selected vehicle is not a truck');
